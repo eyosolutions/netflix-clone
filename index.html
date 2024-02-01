@@ -46,7 +46,12 @@
             <div class="cta__email">
               <div class="email">
                 <span class="span">Email address</span>
-                <input class="input" type="text" placeholder="Email address" />
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="Email address"
+                  maxlength="40"
+                />
               </div>
               <div class="cta__email-error">
                 <i class="fa fa-close"></i>
@@ -259,11 +264,15 @@
 
         <div class="cta__body">
           <div class="cta__email">
-            <input
-              class="cta__input"
-              placeholder="Email address"
-              name="email"
-            />
+            <div class="email">
+              <span class="span">Email address</span>
+              <input
+                class="input"
+                type="text"
+                placeholder="Email address"
+                maxlength="40"
+              />
+            </div>
             <div class="cta__email-error">
               <i class="fa fa-close"></i>
               <p>Email is required.</p>

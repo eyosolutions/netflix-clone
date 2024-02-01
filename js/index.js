@@ -10,75 +10,55 @@ collapsibles.forEach((item) => {
   });
 });
 
-// onClick:
-// vertical alignment - bottom
-// lower the position of the span a little
-// lower the position of the input a little
+// *********** START ***************
 
-// Out of focus
-// hide span
-// const email = document.querySelector(".email");
+let activeEmail = null;
 
-// email.addEventListener("click", function () {
-//   this.firstElementChild.classList.add("show-span");
-//   this.lastElementChild.classList.add("shift-input");
-//   this.lastElementChild.placeholder = "";
-// });
+// Document click event handler to remove classes when clicked outside any .email element
+function handleDocumentClick(event) {
+  const clickedEmail = event.target.closest(".email");
 
-// document.addEventListener("click", function () {
-//   email.firstElementChild.classList.remove("show-span");
-//   email.lastElementChild.classList.remove("shift-input");
-//   email.lastElementChild.placeholder = "Email address";
-//   console.log("hello");
-// });
-
-// console.log(email);
-// const email = document.querySelector(".email");
-
-// Click event handler for the .email element
-// function handleEmailClick(event) {
-//   event.stopPropagation(); // Prevent the click event from propagating to the document
-//   this.firstElementChild.classList.add("show-span");
-//   this.lastElementChild.classList.add("shift-input");
-//   this.lastElementChild.placeholder = "";
-// }
-
-// Document click event handler to remove classes when clicked outside the .email element
-// function handleDocumentClick(event) {
-//   if (!email.contains(event.target)) {
-//     email.firstElementChild.classList.remove("show-span");
-//     email.lastElementChild.classList.remove("shift-input");
-//     email.lastElementChild.placeholder = "Email address";
-//   }
-// }
-
-// Add click event listener to the .email element
-// email.addEventListener("click", handleEmailClick);
-
-// // Add click event listener to the document to handle clicks outside the .email element
-// document.addEventListener("click", handleDocumentClick);
-
-const email = document.querySelector(".email");
+  // Check if the clicked element is within any .email element
+  if (!clickedEmail) {
+    resetEmailState(activeEmail);
+  }
+}
 
 // Click event handler for the .email element
 function handleEmailClick(event) {
   event.stopPropagation(); // Prevent the click event from propagating to the document
+
+  // Reset the state of the previously active email
+  if (activeEmail && activeEmail !== this) {
+    resetEmailState(activeEmail);
+  }
+
+  // Set the current email as the active one
+  activeEmail = this;
+
   this.firstElementChild.classList.add("show-span");
   this.lastElementChild.classList.add("shift-input");
   this.classList.add("email-focus");
   this.lastElementChild.placeholder = "";
 }
 
-// Document click event handler to remove classes when clicked outside the .email element
-function handleDocumentClick() {
-  email.firstElementChild.classList.remove("show-span");
-  email.lastElementChild.classList.remove("shift-input");
-  email.classList.remove("email-focus");
-  email.lastElementChild.placeholder = "Email address";
+// Function to reset the state of an email element
+function resetEmailState(emailElement) {
+  if (emailElement) {
+    emailElement.firstElementChild.classList.remove("show-span");
+    emailElement.lastElementChild.classList.remove("shift-input");
+    emailElement.classList.remove("email-focus");
+    emailElement.lastElementChild.placeholder = "Email address";
+  }
 }
 
-// Add click event listener to the .email element
-email.addEventListener("click", handleEmailClick);
+// Add click event listener to each .email element
+document.querySelectorAll(".email").forEach((emailInstance) => {
+  // Add click event listener to each .email element
+  emailInstance.addEventListener("click", handleEmailClick);
+});
 
-// Add click event listener to the document to handle clicks outside the .email element
+// Add click event listener to the document to handle clicks outside any .email element
 document.addEventListener("click", handleDocumentClick);
+
+// ****************** END ***************************
